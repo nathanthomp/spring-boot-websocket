@@ -1,4 +1,4 @@
-package com.websocket.test.api;
+package com.springboot.websocket;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -7,11 +7,11 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 
 @Configuration
 @EnableWebSocket
-public class WebsocketConfiguration implements WebSocketConfigurer {
+public class MyWebSocketConfiguration implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(new WebsocketHandler(), "/ws").setAllowedOrigins("*");
+        registry.addHandler(new MyWebSocketHandler(), "/").setAllowedOrigins("*");
     }
-    
+
 }
