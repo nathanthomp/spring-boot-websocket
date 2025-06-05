@@ -2,11 +2,13 @@ package com.springboot.websocket;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+@Component
 public class MyWebSocketHandler extends TextWebSocketHandler {
 
     private CopyOnWriteArrayList<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
@@ -29,11 +31,14 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
         sessions.remove(session);
     }
 
-    public void broadcast(TextMessage message) throws Exception {
+    public void broadcast(TextMessage message) {
         for (WebSocketSession session : sessions) {
 
             try {
-                session.sendMessage(message);
+                if (session.isOpen()) {
+                    session.sendMessage(message);
+                    System.out.println("Message sent to " + session.getId());
+                }
             } catch (Exception e) {
                 System.out.println("Could not send message to " + session.getId());
             }
