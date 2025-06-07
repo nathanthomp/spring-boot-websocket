@@ -3,10 +3,9 @@ package com.springboot.websocket;
 import io.awspring.cloud.sqs.annotation.SqsListener;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.web.socket.TextMessage;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class MySqsMessageListener {
 
     @Autowired
@@ -15,6 +14,7 @@ public class MySqsMessageListener {
     @SqsListener("test-queue")
     public void receiveMessage(String message) {
         System.out.println("Received SQS message: " + message);
-        this.myWebSocketHandler.broadcast(new TextMessage(message));
+        this.myWebSocketHandler.broadcast(message);
     }
+
 }

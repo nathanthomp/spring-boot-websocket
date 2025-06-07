@@ -22,7 +22,6 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         System.out.println("Websocket Message Recieved: " + message.getPayload());
-        this.broadcast(message);
     }
 
     @Override
@@ -31,12 +30,12 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
         sessions.remove(session);
     }
 
-    public void broadcast(TextMessage message) {
+    public void broadcast(String message) {
         for (WebSocketSession session : sessions) {
 
             try {
                 if (session.isOpen()) {
-                    session.sendMessage(message);
+                    session.sendMessage(new TextMessage(message));
                     System.out.println("Message sent to " + session.getId());
                 }
             } catch (Exception e) {
